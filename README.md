@@ -1,5 +1,10 @@
 Basic Chatbot
-A conversational AI chatbot project exploring natural language models for engaging, context-aware conversations. The project includes two components: a basic chatbot using Microsoft's DialoGPT-small and an enhanced conversational chatbot using Facebook's BlenderBot-400M, optimized through extensive experimentation for portfolio-ready performance.
+A conversational AI chatbot project exploring natural language models for engaging, context-aware conversations. The project includes multiple components:
+- A basic chatbot using Microsoft's DialoGPT-small
+- An enhanced conversational chatbot using Facebook's BlenderBot-400M
+- An experiment with two BlenderBot agents conversing with each other
+
+All components are optimized through extensive experimentation for portfolio-ready performance.
 Features
 
 Context-aware conversations with chat history management
@@ -28,14 +33,26 @@ pip install torch==2.2.2 safetensors transformers "numpy<2.0" "urllib3<2.0"
 
 
 
-Usage
+## Usage
 
-Run either chatbot component:
-Basic Chatbot:python chatbot.py
+### Basic Chatbot
+```bash
+python chatbot.py
+```
 
+### Conversational Chatbot
+```bash
+python chatbot_experiment_happy_v11.py
+```
 
-Conversational Chatbot:python chatbot_experiment_happy_v11.py
-
+### BlenderBot Conversation Experiment
+Run two BlenderBot agents talking to each other:
+```bash
+python blenderbot_chat.py
+```
+When prompted:
+- Enter the number of conversation turns (default: 5)
+- Optionally provide an initial message to start the conversation
 
 
 
@@ -46,7 +63,16 @@ Type quit to exit
 
 
 
-Project Components
+## Project Architecture
+
+### Base Utilities (base_utils.py)
+A shared module containing common functionality used across different chatbot implementations:
+- Model loading and initialization
+- Input cleaning and preprocessing
+- Response generation logic
+
+### Chatbot Components
+
 1. Basic Chatbot (chatbot.py)
 
 Built with Microsoft's DialoGPT-small model.
