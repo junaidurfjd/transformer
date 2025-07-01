@@ -1,251 +1,244 @@
-Basic Chatbot
-A conversational AI chatbot project exploring natural language models for engaging, context-aware conversations. The project includes multiple components:
-- A basic chatbot using Microsoft's DialoGPT-small
-- An enhanced conversational chatbot using Facebook's BlenderBot-400M
-- An experiment with two BlenderBot agents conversing with each other
+# Transformer Chatbot Experiment
 
-All components are optimized through extensive experimentation for portfolio-ready performance.
-Features
+A conversational AI project exploring natural language models to create engaging, context-aware chatbots. This project evolved through three experiments, each building on the previous to enhance conversational quality and showcase AI development skills.
 
-Context-aware conversations with chat history management
-Input validation and cleaning
-Configurable response generation with sampling techniques
-Resettable conversation history
-Optimized for efficient memory usage on consumer hardware (e.g., 16 GB RAM)
-Experimentation with model parameters to improve response quality
+## Table of Contents
+- [Features](#features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Experiment Summary](#experiment-summary)
+  - [Experiment 1: Basic Chatbot](#experiment-1-basic-chatbot-with-dialo-gpt-small)
+  - [Experiment 2: Conversational Chatbot](#experiment-2-conversational-chatbot-with-blenderbot-400m)
+  - [Experiment 3: Dual Bot Conversation](#experiment-3-dual-blenderbot-400m-conversation)
+- [Key Lessons Learned](#key-lessons-learned)
+- [Technical Details](#technical-details)
+- [Future Experiments](#future-experiments)
+- [License](#license)
 
-Requirements
+## Features
 
-Python 3.8+
-transformers library
-torch (PyTorch)
-safetensors for efficient model loading
-numpy<2.0, urllib3<2.0 for compatibility
+- Context-aware conversations with chat history management
+- Input validation and cleaning
+- Configurable response generation with sampling techniques
+- Resettable conversation history
+- Optimized for consumer hardware (e.g., 16 GB RAM)
+- Extensive parameter tuning for response quality
+- Debug logging for token counts and conversation analysis
 
-Installation
+## Requirements
 
-Create a virtual environment (recommended):python3 -m venv basic-chat
-source basic-chat/bin/activate
+- Python 3.8+
+- transformers
+- torch (PyTorch)
+- safetensors for efficient model loading
+- numpy<2.0 and urllib3<2.0 for compatibility
 
+## Installation
 
-Install dependencies:pip install --upgrade pip
-pip install torch==2.2.2 safetensors transformers "numpy<2.0" "urllib3<2.0"
+1. Create a virtual environment (recommended):
+   ```bash
+   python3 -m venv transformer
+   source transformer/bin/activate
+   ```
 
-
+2. Install dependencies:
+   ```bash
+   pip install --upgrade pip
+   pip install torch==2.2.2 safetensors transformers "numpy<2.0" "urllib3<2.0"
+   ```
 
 ## Usage
 
-### Basic Chatbot
+### 1. Basic Chatbot (chatbot.py)
+Run the DialoGPT-small chatbot:
 ```bash
 python chatbot.py
 ```
+- Select option 1 for configuration tests or 2 for interactive mode
+- Commands:
+  - Type `reset` to clear history
+  - Type `quit` to exit
 
-### Conversational Chatbot
+### 2. Conversational Chatbot (blenderbot.py)
+Run the BlenderBot-400M chatbot:
 ```bash
-python chatbot_experiment_happy_v11.py
+python blenderbot.py
 ```
+- Commands:
+  - Type `reset` to clear history
+  - Type `quit` to exit
 
-### BlenderBot Conversation Experiment
-Run two BlenderBot agents talking to each other:
+### 3. Dual Bot Conversation (blenderbot_chat.py)
+Run two BlenderBot-400M bots conversing:
 ```bash
 python blenderbot_chat.py
 ```
-When prompted:
-- Enter the number of conversation turns (default: 5)
-- Optionally provide an initial message to start the conversation
-
-
-
-Start chatting! Commands:
-Type anything to interact with the bot
-Type reset to clear conversation history
-Type quit to exit
-
-
-
-## Experiment Analysis
-
-### BlenderBot-to-BlenderBot Conversations
-
-After multiple runs of the BlenderBot conversation experiment, we've observed several interesting patterns and areas for improvement:
-
-#### Key Observations:
-
-1. **Conversation Starters**
-   - The model tends to start with simple, open-ended questions about common topics (pets, hobbies, movies)
-   - Initial messages often follow the pattern "Do you have any X? I like Y."
-
-2. **Consistency Issues**
-   - Bots sometimes contradict themselves within the same conversation
-   - Example: One bot said "I have a dog" then later "I don't have any pets"
-
-3. **Topic Drift**
-   - Conversations often drift to unrelated topics
-   - Example: Beach conversation suddenly switched to cruises without clear transition
-
-4. **Memory Limitations**
-   - Bots sometimes forget or contradict earlier parts of the conversation
-   - Repetition of similar phrases occurs in longer conversations
-
-#### Areas for Improvement:
-
-1. **Context Management**
-   - Implement better conversation history tracking
-   - Add topic consistency checks
-   - Reduce repetition through better prompt engineering
-   - Add topic-specific memory to maintain conversation focus
-
-2. **Diversity**
-   - Encourage more varied conversation starters
-   - Implement topic steering to explore different subjects
-   - Add constraints to prevent repetitive responses
-   - Develop topic-specific response patterns
-
-3. **Topic Focus**
-   - Add topic-specific prompts to guide conversation
-   - Implement topic relevance scoring
-   - Add topic drift detection and correction
-   - Create topic-specific knowledge bases
-
-#### Topic-Based Conversation Findings
-
-1. **Science Topic**
-   - Challenge: Maintaining technical discussion
-   - Issue: Quick drift to general science history
-   - Solution: Add technical vocabulary and context preservation
-
-2. **Religion Topic**
-   - Challenge: Maintaining philosophical discussion
-   - Issue: Drift into general science discussion
-   - Solution: Add religious context and topic-specific prompts
-
-3. **Technology Topic**
-   - Challenge: Maintaining focus on AI and job market
-   - Issue: Complete topic drift to personal relationships
-   - Solution: Add topic relevance checks and context preservation
-
-#### Technical Observations
-
-1. **Memory Management**
-   - Current implementation: Simple token-based history
-   - Limitation: Loses semantic context over multiple turns
-   - Suggestion: Implement semantic memory tracking
-
-2. **Topic Tracking**
-   - Current implementation: No explicit topic tracking
-   - Issue: Conversations lose original context
-   - Suggestion: Add topic vector tracking and relevance scoring
-
-3. **Response Generation**
-   - Current implementation: Simple sampling
-   - Issue: Repetitive responses and topic drift
-   - Suggestion: Add context-aware sampling and topic relevance filtering
-
-3. **Engagement**
-   - Improve question-asking patterns
-   - Add more detailed and specific responses
-   - Implement better follow-up questions
-
-### Next Steps
-
-1. Experiment with different temperature and top-k settings
-2. Implement conversation memory tracking
-3. Add topic modeling to guide conversation flow
-4. Develop metrics for evaluating conversation quality
-
-## Project Architecture
-
-### Base Utilities (base_utils.py)
-A shared module containing common functionality used across different chatbot implementations:
-- Model loading and initialization
-- Input cleaning and preprocessing
-- Response generation logic
-
-### Chatbot Components
-
-1. Basic Chatbot (chatbot.py)
-
-Built with Microsoft's DialoGPT-small model.
-Uses beam search (5 beams) for coherent responses.
-Implements basic context management and input validation.
-Focuses on lightweight, general-purpose conversations.
-
-2. Conversational Chatbot (chatbot_experiment_happy_v11.py)
-
-Built with Facebook's BlenderBot-400M model for enhanced conversational engagement.
-Optimized for "happy case" inputs (e.g., hobbies, casual statements, simple Q&A).
-Features a single, tuned configuration: Very Engaging Sampling (top_k=10, top_p=0.99, temperature=0.4, max_new_tokens=200).
-Supports context-aware conversations with max_history_tokens=512 for efficient memory usage.
-Includes debug logging for token counts to ensure proper response generation.
-
-Experimentation and Lessons Learned
-The project evolved through extensive experimentation to optimize BlenderBot-400M for engaging conversations, addressing challenges like truncation and personalization. Key iterations and findings:
-
-Initial Setup (DialoGPT-small):
-
-Used chatbot.py with beam search for stable, generic responses.
-Limited by lack of parameter tuning and weaker engagement for hobby-related inputs.
-
-
-Switch to BlenderBot-400M:
-
-Adopted BlenderBot-400M for better conversational flow, especially for hobbies (e.g., “Mine is The Godfather Part II”).
-Tested multiple configs (Balanced, Engaging, Very Engaging, Balanced Plus) with varying top_k, top_p, temperature, and max_new_tokens.
-
-
-Truncation Issues:
-
-Problem: Early runs had truncated outputs (e.g., “fi book?”, “you up to?”) due to low max_new_tokens (60–120) and incorrect slicing in batch_decode.
-Solution: Increased max_new_tokens to 200 and removed slicing in batch_decode (reply_ids decoded fully with skip_special_tokens=True).
-
-
-Config Tuning:
-
-Problem: High temperature (1.3) and top_p (0.97) caused noisy, fragmented responses.
-Solution: Settled on top_k=10, top_p=0.99, temperature=0.4 for focused, chatty outputs (e.g., “I love hiking as well, especially in the mountains”).
-
-
-Prompting Missteps:
-
-Problem: Adding prompts (e.g., “You are a friendly assistant”) worsened personalization (e.g., ignoring “Alex”/“Sam”).
-Solution: Used raw input to align with BlenderBot’s training, improving responses.
-
-
-Context Management:
-
-Problem: High max_history_tokens (1024) risked memory issues on 16 GB RAM.
-Solution: Set to 512 for stability, sufficient for single-turn experiments and interactive mode.
-
-
-Key Findings:
-
-BlenderBot-400M excels at hobby chats (e.g., movies, hiking) and simple Q&A (e.g., “dogs are my favorite”).
-Struggles with personalization (e.g., using names like “Alex”).
-Low temperature and top_k improve coherence without sacrificing engagement.
-Proper tokenization (skip_special_tokens=True, clean_up_tokenization_spaces=True) is critical to avoid stray characters.
-
-
-
-Technical Details
-
-Models: DialoGPT-small (basic chatbot) and BlenderBot-400M (conversational chatbot).
-Generation: Very Engaging Sampling uses top-k sampling (top_k=10), nucleus sampling (top_p=0.99), and low temperature (0.4) for coherent, engaging responses.
-Context: Maintains history with max_history_tokens=512, trimming excess tokens dynamically.
-Optimization: Uses safetensors for efficient model loading and runs on consumer hardware (16 GB RAM).
-Debugging: Includes token count logging to verify input/output lengths.
-
-Future Experiments
-
-Add more configs (e.g., Balanced Sampling) for comparison.
-Explore DialoGPT-medium or fine-tuning BlenderBot for better personalization.
-Test additional inputs (e.g., “I love coding!”) to expand happy cases.
-Implement profanity filtering or nonsense detection from the basic chatbot.
-
-Notes
-
-The conversational chatbot shines with hobby-related and casual inputs but may struggle with names or complex open-ended questions.
-Optimized for portfolio demonstration, showcasing parameter tuning and debugging skills.
-Responses are generated without external prompts for authenticity.
-
-License
-This project is for educational and personal use only.
+- Enter number of turns (1-10, default 5)
+- Optionally provide an initial message (default: "Hey, what's your favorite hobby?")
+- Conversation is saved to `conversation_log.txt`
+
+## Experiment Summary
+
+### Experiment 1: Basic Chatbot with DialoGPT-small (chatbot.py)
+
+**Objective:** Build a lightweight chatbot for general-purpose conversations using Microsoft's DialoGPT-small (137M parameters).
+
+**Implementation:**
+- Used beam search (2-4 beams) with configs like:
+  - Balanced Creative: `top_k=40, top_p=0.92, temperature=0.8, max_new_tokens=80`
+  - Precise & Focused: `top_k=10, top_p=0.85, temperature=0.5, max_new_tokens=60`
+- Tested with 12 happy-case inputs (e.g., "I'm crazy about movies, you?", "What's your favorite animal?")
+- Added input cleaning and context management with `max_history_tokens=512`
+
+**Findings:**
+- Initial outputs were generic and meme-heavy (e.g., "I'm not your guy, friend" for "Hi, I'm Alex, what's up?")
+- Tuning to sampling-based configs (`top_k=10, top_p=0.99, temperature=0.4, max_new_tokens=150`) improved length but not coherence, producing gibberish (e.g., "lolololooolooolloooowwwwwwwnnnooooooooohhhhhhhhxxx")
+
+**Lesson:** DialoGPT-small's Reddit-based training and small size limit its ability to handle structured, engaging conversations for hobbies and Q&A.
+
+### Experiment 2: Conversational Chatbot with BlenderBot-400M (blenderbot.py)
+
+**Objective:** Develop an engaging chatbot optimized for happy-case inputs using Facebook's BlenderBot-400M (400M parameters).
+
+**Implementation:**
+- Switched to BlenderBot-400M for better conversational flow
+- Tested multiple configs, starting with high `temperature=1.3` and `top_p=0.97`
+- Refined to Very Engaging Sampling:
+  ```python
+  {
+      'top_k': 10,
+      'top_p': 0.99,
+      'temperature': 0.4,
+      'max_new_tokens': 200
+  }
+  ```
+- Used the same 12 happy-case inputs
+- Implemented raw input (no system prompts)
+- Set `max_history_tokens=512` for stability on 16 GB RAM
+
+**Findings:**
+- Early runs had truncation issues (e.g., "fi book?" for "I love sci-fi books!")
+- Final config produced coherent, engaging responses (e.g., "I love hiking as well, especially in the mountains")
+- Struggled with personalization (e.g., ignoring names like "Alex")
+
+**Lessons:**
+1. Proper tokenization (`skip_special_tokens=True`, `clean_up_tokenization_spaces=True`) eliminates stray characters
+2. Low temperature and top_k balance coherence and engagement
+3. Raw input aligns with BlenderBot's training, avoiding prompt-related confusion
+
+### Experiment 3: Dual BlenderBot-400M Conversation (blenderbot_chat.py)
+
+**Objective:** Simulate dynamic conversations between two BlenderBot-400M bots to showcase context management.
+
+**Implementation:**
+- Used Very Engaging Sampling:
+  ```python
+  {
+      'top_k': 20,
+      'top_p': 0.99,
+      'temperature': 0.6,
+      'max_new_tokens': 200,
+      'repetition_penalty': 1.1
+  }
+  ```
+- Started with specific prompts and injected new topics every 3 turns
+- Each bot maintained separate chat histories with `max_history_tokens=512`
+- Conversations logged to `conversation_log.txt`
+- Tested for 1-10 turns (default 5)
+
+**Findings:**
+- Generic starters led to repetitive loops on beach/cruise topics
+- Topic injection and `repetition_penalty=1.1` improved variety:
+  ```
+  Bot 1: "Movies are awesome! I'm into hiking. What's your favorite movie?"
+  Bot 2: "My favorite movie is The Godfather Part II. You?"
+  ```
+- Still showed minor repetition and topic drift
+
+**Lessons:**
+1. Bot-to-bot conversations require topic injection for diversity
+2. BlenderBot-400M excels in human-bot interactions
+3. Careful tuning needed for autonomous dialogues
+4. Logging and token count monitoring are essential
+
+## Key Lessons Learned
+
+### Model Selection
+- **DialoGPT-small**
+  - Lightweight but limited by meme-heavy outputs
+  - Struggles with structured inputs
+- **BlenderBot-400M**
+  - Superior engagement for hobbies and Q&A
+  - Better conversational flow due to larger size and training
+
+### Parameter Tuning
+- **Temperature**
+  - High (1.3+): Noisy outputs
+  - Low (0.4-0.6): More coherent responses
+- **Top-k/Top-p**
+  - `top_k=10-20` provides good balance
+  - `top_p=0.99` allows for diverse but focused responses
+- **Other Parameters**
+  - `max_new_tokens=150-200` prevents truncation
+  - `repetition_penalty=1.1` reduces redundancy
+
+### Context Management
+- `max_history_tokens=512` balances memory and context
+- Raw input works better than system prompts
+- Separate histories for multi-bot conversations
+
+### Conversation Dynamics
+- Human-bot interactions more engaging than bot-to-bot
+- Topic injection prevents conversation loops
+- Personalization remains challenging
+
+## Technical Details
+
+### Models
+| Model | Parameters | Use Case |
+|-------|------------|----------|
+| DialoGPT-small | 137M | Basic chatbot functionality |
+| BlenderBot-400M | 400M | Advanced conversations |
+
+### Generation Parameters
+```python
+{
+    'top_k': 10-20,
+    'top_p': 0.99,
+    'temperature': 0.4-0.6,
+    'max_new_tokens': 200,
+    'repetition_penalty': 1.1
+}
+```
+
+### Performance
+- Context window: 512 tokens
+- Memory usage: Optimized for 16 GB RAM
+- Model loading: Uses safetensors for efficiency
+- Debugging: Comprehensive token counting and logging
+
+## Future Experiments
+
+### Model Improvements
+- Experiment with DialoGPT-medium
+- Fine-tune BlenderBot-400M for better personalization
+- Implement LoRA or QLoRA for efficient fine-tuning
+
+### Feature Additions
+- Add profanity filtering
+- Implement nonsense detection
+- Develop topic modeling for better conversation flow
+- Create relevance scoring for responses
+
+### Testing
+- Expand test cases with diverse inputs
+- Benchmark performance across hardware
+- A/B test different parameter sets
+
+## Notes
+
+This project demonstrates the evolution from basic to advanced conversational AI, highlighting the trade-offs between model size, response quality, and computational requirements. BlenderBot-400M shows impressive capabilities but still faces challenges in maintaining context and personalization in extended conversations.
+
+## License
+This project is for educational and personal use only. All models are subject to their respective licenses from Microsoft and Facebook AI.
