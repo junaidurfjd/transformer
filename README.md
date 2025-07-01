@@ -63,6 +63,54 @@ Type quit to exit
 
 
 
+## Experiment Analysis
+
+### BlenderBot-to-BlenderBot Conversations
+
+After multiple runs of the BlenderBot conversation experiment, we've observed several interesting patterns and areas for improvement:
+
+#### Key Observations:
+
+1. **Conversation Starters**
+   - The model tends to start with simple, open-ended questions about common topics (pets, hobbies, movies)
+   - Initial messages often follow the pattern "Do you have any X? I like Y."
+
+2. **Consistency Issues**
+   - Bots sometimes contradict themselves within the same conversation
+   - Example: One bot said "I have a dog" then later "I don't have any pets"
+
+3. **Topic Drift**
+   - Conversations often drift to unrelated topics
+   - Example: Beach conversation suddenly switched to cruises without clear transition
+
+4. **Memory Limitations**
+   - Bots sometimes forget or contradict earlier parts of the conversation
+   - Repetition of similar phrases occurs in longer conversations
+
+#### Areas for Improvement:
+
+1. **Context Management**
+   - Implement better conversation history tracking
+   - Add topic consistency checks
+   - Reduce repetition through better prompt engineering
+
+2. **Diversity**
+   - Encourage more varied conversation starters
+   - Implement topic steering to explore different subjects
+   - Add constraints to prevent repetitive responses
+
+3. **Engagement**
+   - Improve question-asking patterns
+   - Add more detailed and specific responses
+   - Implement better follow-up questions
+
+### Next Steps
+
+1. Experiment with different temperature and top-k settings
+2. Implement conversation memory tracking
+3. Add topic modeling to guide conversation flow
+4. Develop metrics for evaluating conversation quality
+
 ## Project Architecture
 
 ### Base Utilities (base_utils.py)

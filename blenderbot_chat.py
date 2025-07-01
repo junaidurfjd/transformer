@@ -17,26 +17,40 @@ def chat_loop(agents, num_turns=5, initial_message=None):
     Args:
         agents: List of two agent dictionaries
         num_turns: Number of conversation turns (back and forth)
-        initial_message: Optional initial message to start the conversation
+        initial_message: Not used, kept for backward compatibility
     """
     config = {
         "do_sample": True,
         "top_k": 10,
         "top_p": 0.99,
-        "temperature": 0.4,
-        "max_new_tokens": 200
+        "temperature": 0.8,  # Higher temperature for more creative initial message
+        "max_new_tokens": 200,
+        "repetition_penalty": 1.2,
+        "no_repeat_ngram_size": 3
     }
     
-    # Start with a greeting if no initial message is provided
-    if initial_message is None:
-        initial_message = "Hello! How are you today?"
+    print("\nStarting conversation...")
+    print("First bot is thinking of something to say...\n")
     
-    print(f"\nStarting conversation for {num_turns} turns...\n")
-    print(f"Initial message: {initial_message}\n")
-    
-    # First agent starts the conversation
+    # First agent generates its own initial message
     current_speaker = 0
-    message = initial_message
+    agent = agents[current_speaker]
+    
+    # Generate initial message with a prompt that encourages the bot to start a conversation
+    initial_prompt = ""
+    input_ids = agent['tokenizer']([initial_prompt], return_tensors="pt")
+    output = agent['model'].generate(
+        **input_ids,
+        **config
+    )
+    message = agent['tokenizer'].decode(
+        output[0], 
+        skip_special_tokens=True, 
+        clean_up_tokenization_spaces=True
+    )
+    
+    # Store the initial message in history
+    agent['history'] = output
     
     for turn in range(num_turns * 2):  # Multiply by 2 for back-and-forth
         agent = agents[current_speaker]
@@ -61,21 +75,17 @@ def chat_loop(agents, num_turns=5, initial_message=None):
 def main():
     print("BlenderBot Conversation Experiment")
     print("===============================")
+    print("Two AI agents will have a conversation with each other.")
+    print("The first bot will generate its own initial message.\n")
     
-    # Get user input
-    try:
-        num_turns = int(input("Enter number of conversation turns (default: 5): ") or 5)
-        initial_message = input("Enter initial message (press Enter for default): ") or None
-    except ValueError:
-        print("Invalid input. Using default values.")
-        num_turns = 5
-        initial_message = None
+    # Set fixed number of turns
+    num_turns = 8  # Fixed number of conversation turns
     
     # Initialize agents
     agents = setup_agents()
     
-    # Run the conversation
-    chat_loop(agents, num_turns, initial_message)
+    # Run the conversation (initial_message is not used, kept for backward compatibility)
+    chat_loop(agents, num_turns, None)
     
     print("\nConversation complete!")
 
